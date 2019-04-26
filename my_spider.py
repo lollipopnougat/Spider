@@ -1,4 +1,5 @@
 import requests
+import decorator
 
 '''
 模块名：my_spider
@@ -17,6 +18,7 @@ class MySpider(object):
             "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36"
         }
 
+    @decorator.report
     def login(self,login_url,home_page_url):
         '''
         登录
@@ -53,7 +55,7 @@ class MySpider(object):
             print("login successfully")
 
         
-
+    @decorator.report
     def crawl(self,login_url,home_page_url,catalogue_url):
         '''
         爬取。生成一个MySpider之后，只要一声令下（调用此函数），就可以开始爬取网站。

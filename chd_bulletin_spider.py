@@ -12,19 +12,22 @@ from my_spider import MySpider
 from my_parser import MyParser
 from my_database import MyDatabase
 from my_archiver import MyArchiver
+import decorator
+
 from bs4 import BeautifulSoup
 import requests
 import pymysql
 
 class chdParser(MyParser):
+
+    @decorator.report
     def login_data_parser(self,login_url):
         '''
         长安大学登录表单数据解析
         :param login_url: 登录页面的url
         :return (登录信息字典,获取时得到的cookies)
         '''
-        #report
-        print('[@parser]:get login data')
+        
 
         response=requests.get(login_url)
         html=response.text
@@ -48,12 +51,11 @@ class chdParser(MyParser):
         }
 
 
-        #report
-        print('[@parser]:get login data (has done)')
+        
 
         return login_data,response.cookies
 
-    
+    @decorator.report
     def get_urls(self,catalogue_url,**kwargs):
         '''
         获取目录页的url
@@ -88,7 +90,7 @@ class chdParser(MyParser):
         url_list=[]
         
         
-        for i in range(1,page_num+1):
+        for i in range(1,10+1):
             para['pageIndex'] = i
             #report
             print("[@parser]:get urls({}%): {}/{}".format(round((i/page_num)*100,1),i,page_num))

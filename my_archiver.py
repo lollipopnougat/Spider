@@ -8,6 +8,8 @@
 
 
 from my_database import MyDatabase
+import decorator
+
 
 class MyArchiver(object):
     def __init__(self,database_name,table_name,**config):
@@ -16,6 +18,7 @@ class MyArchiver(object):
         self.table_name=table_name#使用的表名
         self.db=MyDatabase(**config)#创建一个
 
+    
     def save(self,record_dict):
         '''
         MySpider类当中调用此方法，派生类如果需要使用其他保存方法，只需覆盖此方法
@@ -23,6 +26,7 @@ class MyArchiver(object):
         '''
         self.save_in_db(record_dict)
 
+    
     def save_in_db(self,record_dict):
         '''
         保存到数据库
@@ -37,6 +41,7 @@ class MyArchiver(object):
         '''
         return self.db.record_isexist(self.database_name,self.table_name,primary_key,find_value)
 
+    @decorator.report
     def reduce_crawled_url(self,url_list):
         '''
         将获取到的url_list去除数据库中已有的部分

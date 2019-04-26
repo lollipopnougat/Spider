@@ -11,15 +11,16 @@ from bs4 import BeautifulSoup
 from lxml import etree
 import pymysql
 
+import decorator
+
 class MyParser(object):
+    @decorator.report
     def login_data_parser(self,login_url):
         '''
         解析登录表单信息
         :param login_url: 登录页面的url
         :return (登录信息字典,获取时得到的cookies)
         '''
-        #提示信息
-        print('[@parser]:get login data')
 
         response=requests.get(login_url)
         html=response.text
@@ -31,9 +32,6 @@ class MyParser(object):
             'example_data':example_data
         }
 
-
-        #提示信息
-        print('[@parser]:get login data (has done)')
 
         return login_data,response.cookies
     
@@ -51,6 +49,8 @@ class MyParser(object):
         result_list=tree.xpath(xpath)
         return result_list
 
+
+    @decorator.report
     def get_urls(self,catalogue_url,**kwargs):
 
         '''
