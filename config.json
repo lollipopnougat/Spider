@@ -1,0 +1,12 @@
+{
+    "host": "127.0.0.1",
+    "user": "root",
+    "passwd": "password",
+    "port": 3306,
+    "charset": "utf8",
+    "database_name": "dbase",
+    "table_name": "spider",
+    "login_url": "http://ids.chd.edu.cn/authserver/login?service=http%3A%2F%2Fportal.chd.edu.cn%2F",
+    "home_page_url": "http://portal.chd.edu.cn/",
+    "catalogue_url": "http://portal.chd.edu.cn/detach.portal?.pmn=view&.ia=false&action=bulletinsMoreView&search=true&.f=f40571&.pen=pe65&groupid=all"
+}

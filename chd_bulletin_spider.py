@@ -17,6 +17,7 @@ import decorator
 from bs4 import BeautifulSoup
 import requests
 import pymysql
+import json
 
 class chdParser(MyParser):
 
@@ -138,27 +139,23 @@ class chdSpider(MySpider):
 
 
 if __name__ == '__main__':
-
-    #url配置
-    login_url="http://ids.chd.edu.cn/authserver/login?service=http%3A%2F%2Fportal.chd.edu.cn%2F"
-    home_page_url="http://portal.chd.edu.cn/"
-    catalogue_url="http://portal.chd.edu.cn/detach.portal?.pmn=view&.ia=false&action=bulletinsMoreView&search=true&.f=f40571&.pen=pe65&groupid=all"
-
-    #数据库连接配置
+    
+    #读取json配置文件
+    with open('config.json','r') as f:
+        config=json.load(f)
+    
     connect_config={
-        'host':'127.0.0.1',
-        'user':'root',
-        'passwd':'password',
-        'port':3306,
-        'charset':'utf8',
+        'host':config['host'],
+        'user':config['user'],
+        'passwd':config['passwd'],
+        'port':config['port'],
+        'charset':config['charset'],
     }
-    database_name='dbase'
-    table_name='spider'#表需要的字段：url,title,html，类型Varchar,大小够装就行，url(255),title(255),html(8000或者使用tex类型)
 
     #创建解析器和存档器
     parser=chdParser()
-    archiver=chdArchiver(database_name,table_name,**connect_config)
+    archiver=chdArchiver(config['database_name'],config['table_name'],**connect_config)
     #召唤小蜘蛛:D
     sp=chdSpider(parser,archiver)
-    sp.crawl(login_url,home_page_url,catalogue_url)
+    sp.crawl(config['login_url'],config['home_page_url'],config['catalogue_url'])
     
